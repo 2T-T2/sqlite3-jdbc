@@ -1,0 +1,3 @@
+module:t_panda.jdbc.sqlite
+t_panda.jdbc.sqlite
+t_panda.jdbc.sqlite.event
