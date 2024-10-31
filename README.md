@@ -54,8 +54,7 @@ import java.util.stream.Stream;
 
 public class App {
     public static void main(String[] args) throws ClassNotFoundException {
-        Class.forName("t_panda.jdbc.sqlite.SQLiteDriver");
-
+        
         try (
             Connection conn = DriverManager.getConnection("jdbc:sqlite://test2.db", null, null);
             Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE)
@@ -81,7 +80,7 @@ public class App {
                            constraint FK_student foreign key (class_name) references class(name)
                         );
                         """);
-                while (stmt.getMoreResults()) {
+                while (!((!stmt.getMoreResults()) && (stmt.getUpdateCount() == -1))) {
                 }
 
                 try (ResultSet resultSet = stmt.executeQuery("select type, name, sql from sqlite_master");) {
