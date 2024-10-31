@@ -4,6 +4,7 @@ import t_panda.jdbc.sqlite.internal.ExceptionMessage;
 import t_panda.jdbc.sqlite.internal.bridge.NativeLib;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -28,13 +29,13 @@ public class SQLiteDriver implements Driver {
     /** ドライバのJarの配置位置 */
     public static final Path DRIVER_JAR_LOCATION;
 
-    private SQLiteDriver() {}
-
     static {
         try {
             if (!isSupported()) throw new Exception("ドライバはこの環境はサポートしていません。");
             DRIVER_JAR_LOCATION = Paths.get(SQLiteDriver.class.getProtectionDomain().getCodeSource().getLocation().toURI());
-            System.load(NativeLib.getNativeLibAbsolutePath());
+            if (!NativeLib.getNativeLibAbsolutePath().toFile().exists())
+                throw new FileNotFoundException(NativeLib.getNativeLibAbsolutePath().normalize().toString());
+            System.load(NativeLib.getNativeLibAbsolutePath().toString());
             java.sql.DriverManager.registerDriver(new SQLiteDriver());
 
         } catch (URISyntaxException e) {
@@ -43,7 +44,7 @@ public class SQLiteDriver implements Driver {
         } catch (SQLException e) {
             throw new RuntimeException("ドライバの登録 もしくは、ドライバのインスタンス化に失敗しました。\n" + e);
 
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new RuntimeException(e);
         }
 

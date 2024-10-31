@@ -258,6 +258,7 @@ exit /b
         -cf %dst_dir%%jar_name%^
         -C %classes_dir%%mdl_name% .^
         -C %java_src_dir%%mdl_name% .^
+        META-INF ^
         %jar_res_dir%
     echo %jarCmd%
     %jarCmd%

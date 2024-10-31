@@ -4,6 +4,7 @@ import t_panda.jdbc.sqlite.SQLiteDriver;
 import t_panda.jdbc.sqlite.internal.ExceptionMessage;
 
 import java.io.File;
+import java.nio.file.Path;
 
 /**
  * ネイティブライブラリに係る処理のクラス
@@ -19,14 +20,14 @@ public class NativeLib {
      * ドライバの配置ディレクトリ + ネイティブライブラリファイル名を返却します。
      * @return ネイティブライブラリの絶対パスを取得します。
      */
-    public static String getNativeLibAbsolutePath() {
+    public static Path getNativeLibAbsolutePath() {
         return SQLiteDriver.DRIVER_JAR_LOCATION.getParent().resolve(String.format(
             NATIVE_LIB_NAME_FMT_SQLITE
            ,getJvmArch()
            ,getSystemFileExtension()
            ,VERSION
            ,getSystemFileExtension()
-        )).toAbsolutePath().toString();
+        )).toAbsolutePath().normalize();
     }
 
     public static String getSystemFileExtension() {

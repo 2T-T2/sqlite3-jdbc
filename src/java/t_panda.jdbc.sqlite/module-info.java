@@ -8,4 +8,6 @@ module t_panda.jdbc.sqlite {
     exports t_panda.jdbc.sqlite;
     opens t_panda.jdbc.sqlite.event;
     exports t_panda.jdbc.sqlite.event;
+
+    provides java.sql.Driver with t_panda.jdbc.sqlite.SQLiteDriver;
 }

@@ -713,7 +713,7 @@ public class SQLitePreparedStatement extends SQLiteStatementBase implements Prep
             default: throw new SQLException(ExceptionMessage.ILLEGAL_ARGUMENT.getMessage(1, "current", "Statement.CLOSE_ALL_RESULTS, Statement.CLOSE_CURRENT_RESULT, Statement.KEEP_CURRENT_RESULT のいずれか"));
         }
 
-        if (Objects.isNull(this.restSql)) {
+        if (Objects.isNull(this.restSql) || this.restSql.split(";")[0].isBlank()) {
             this.currentResultSet = null;
             this.currentUpdateCount = -1;
             return false;

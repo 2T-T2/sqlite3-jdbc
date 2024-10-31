@@ -44,12 +44,14 @@ jobject getSQLiteReturnCode(JNIEnv* env, int sqliteResultCode) {
 }
 
 sqlite3* jbyteArray2SQLitePtr(JNIEnv* env, jbyteArray jba) {
+    if (jba == nullptr) return nullptr;
     void *buffer;
     env->GetByteArrayRegion(jba, 0, sizeof(buffer), (jbyte*)&buffer);
     return (sqlite3*)buffer;
 }
 
 sqlite3_stmt* jbyteArray2StmtPtr(JNIEnv* env, jbyteArray jba) {
+    if (jba == nullptr) return nullptr;
     void *buffer;
     env->GetByteArrayRegion(jba, 0, sizeof(buffer), (jbyte*)&buffer);
     return (sqlite3_stmt*)buffer;
